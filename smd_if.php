@@ -690,28 +690,28 @@ p(tag-summary). At the place you wish to compare a field with another value, put
 
 *Attributes*
 
-; %(atnm mand)field%
+; %field%
 : Comma-separated list of "fields":#field to test.
-; %(atnm)operator%
+; %operator%
 : Comma-separated list of "operations":#operator for comparison with the corresponding field (e.g. @eq@, @not@, @begins@, etc).
 : Default: @eq@ for most tests, @contains@ for parent tests
-; %(atnm)value%
+; %value%
 : Comma-separated list of "values":#value with which to compare the corresponding fields.
-; %(atnm)logic%
+; %logic%
 : How multiple tests are joined: Choose from:
 :: @and@: all conditions must be met for a TRUE result.
 :: @or@: any of the conditions that match will give a TRUE result.
 : Default: @and@
-; %(atnm)case_sensitive%
+; %case_sensitive%
 : Whether to perform case-sensitive comparisons. Note that if using @islower@ or @isupper@ in a comparison, case sensitivity will automatically be switched on while the test is taking place. Values:
 :: 1 = yes
 :: 0 = no
 : Default: 0
-; %(atnm)filter%
+; %filter%
 : List of regular expressions with which to filter one or more fields/values. See "filtering":#filtering.
-; %(atnm)replace%
+; %replace%
 : List of items with which to replace each of the matching filters.
-; %(atnm)filter_type%
+; %filter_type%
 : Limit the filter to certain types of test. Choose from any of:
 :: @all@
 :: @urlvar@
@@ -721,22 +721,22 @@ p(tag-summary). At the place you wish to compare a field with another value, put
 :: @phpvar@
 :: or any field name
 : Default: @all@
-; %(atnm)filter_on%
+; %filter_on%
 : Apply the filter to either the @field@, the @value@ or both. Please see the "filtering caveat":#fcaveat below for important information about this attribute.
 : Default: @field@
-; %(atnm)param_delim%
+; %param_delim%
 : Delimiter used between each field, operator or value in a multi-test. You normally only need to change this if you have used that character in the name of a custom field, for example.
 : Default:  comma (,)
-; %(atnm)mod_delim%
+; %mod_delim%
 : Delimiter used when specifying field or operator modifiers for:
 :: urlvar, postvar, svrvar, txpvar
 :: parent from @LVL@ and @CAT@
 :: separating an operator from the NUM or NOSPACE modifiers
 : Default: colon (:)
-; %(atnm)list_delim%
+; %list_delim%
 : Delimiter used when specifying a list of values to check via the @in@, @notin@, @between@ and @range@ operators.
 : Default: forward-slash (/)
-; %(atnm)var_prefix%
+; %var_prefix%
 : Prefix any replacement variable names with this string. If nesting smd_if tags, you will probably need to specify this on any inner smd_if tags to prevent the {replacement} variables clashing.
 : Default: @smd_if_@
 
@@ -744,7 +744,7 @@ The lists are processed in order, i.e. the 1st field uses the 1st operator in th
 
 Note that, although the first three attributes are usually mandatory, if you happen to require the default operator for all your tests, you can safely omit @operator@. Similarly with values: if you are entirely testing the existence or type of variables, you can omit the @value@ parameter if you wish. And if you are testing the same @field@ again and again for differing conditions, you can list it just once as a convenient shortcut.
 
-h3(atnm #field). field
+h3(#field). field
 
 List of field locations to look at. A non-exhaustive list of some useful values are:
 
@@ -807,7 +807,7 @@ will test the NULL object (i.e. 'emptiness') to see if it's equal to the @{resul
 
 That would see if the replacement variable @{result}@ was less than or equal to 7 (that's not a typo, the logic is reversed in this case: it is interpreted as: "is 7 greater than {result}", which is the same as "is {result} less than or equal to 7"!)
 
-h3(atnm #operator). operator
+h3(#operator). operator
 
 List of operators to apply, in order, to each field. Choose from:
 
@@ -851,7 +851,7 @@ The @begins@, @ends@ and @contains@ operators, along with any of the @is@ operat
 
 Note also that while @defined@ and @undefined@ differ semantically from @isused@ and @isempty@ (respectively), the way Txp assigns variables means that, for the most part, the terms are interchangeable. When dealing with urlvars, postvars and svrvars, the two sets of operators behave independently, as you would expect. See "Example 5":#eg5 for more. Neither @defined@ nor @undefined@ make sense with @parent@, so they are forbidden.
 
-h3(atnm #value). value
+h3(#value). value
 
 List of values to compare each field in turn to. Can be static values/text or the name of any Txp field, like those given in "field":#field (except "parent").
 
@@ -1033,10 +1033,14 @@ bc. <txp:smd_if field="urlvar:pic, urlvar:page"
 
 Tests if the url variable @pic@ is strictly numerically greater than the value in the current article's @article_image@ field and that the url variable @page@ is missing from the URL address. Compare the outcome of this test with the other operators using the following table when testing the @page@ urlvar:
 
+  <div class="txp-listtables">
+
 |_. URL |_. defined |_. undefined |_. isused |_. isempty |
 | index.php?pag | FALSE | TRUE | FALSE | FALSE |
 | index.php?page= | TRUE | FALSE | FALSE | TRUE |
 | index.php?page=4 | TRUE | FALSE | TRUE | FALSE |
+
+  </div>
 
 h2(#eg6). Example 6: short circuiting the @field@
 
