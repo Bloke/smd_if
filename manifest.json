@@ -1,0 +1,11 @@
+{
+  "name": "smd_if",
+  "description": "Textpattern CMS plugin for generic multiple if condition tests",
+  "version": "1.0.0",
+  "type": 5,
+  "author": "Stef Dawson",
+  "author_uri": "https://stefdawson.com/",
+  "order": 5,
+  "flags": 0,
+  "help": {"file" : ["./README.textile"]}
+}

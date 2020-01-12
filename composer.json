@@ -1,0 +1,16 @@
+{
+  "name": "bloke/smd_if",
+  "description": "Textpattern CMS plugin for generic multiple if condition tests",
+  "keywords": ["textpattern", "plugin", "conditional", "if", "test", "check", "branch", "logic"],
+  "homepage": "https://github.com/bloke/smd_if",
+  "license": "GPL-2.0",
+  "type": "textpattern-plugin",
+  "support": {
+    "issues": "https://github.com/bloke/smd_if/issues",
+    "source": "https://github.com/bloke/smd_if"
+  },
+  "require": {
+    "textpattern/lock": ">=4.7.0",
+    "textpattern/installer": "*"
+  }
+}
