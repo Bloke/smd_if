@@ -229,68 +229,68 @@ function smd_if($atts,$thing)
             if ($fldParts[0] == 'file') {
                 $rfld = $fldParts[1];
                 $fld = '$thisfile["'.$rfld.'"]';
-            } else if (isset($thisfile[$fldParts[0]])) {
+            } elseif (isset($thisfile[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thisfile["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'link') {
+            } elseif ($fldParts[0] == 'link') {
                 $rfld = $fldParts[1];
                 $fld = '$thislink["'.$rfld.'"]';
-            } else if (isset($thislink[$fldParts[0]])) {
+            } elseif (isset($thislink[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thislink["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'image') {
+            } elseif ($fldParts[0] == 'image') {
                 $rfld = $fldParts[1];
                 $fld = '$thisimage["'.$rfld.'"]';
-            } else if (isset($thisimage[$fldParts[0]])) {
+            } elseif (isset($thisimage[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thisimage["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'category') {
+            } elseif ($fldParts[0] == 'category') {
                 $rfld = $fldParts[1];
                 $fld = '$thiscategory["'.$rfld.'"]';
-            } else if (isset($thiscategory[$fldParts[0]])) {
+            } elseif (isset($thiscategory[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thiscategory["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'section') {
+            } elseif ($fldParts[0] == 'section') {
                 $rfld = $fldParts[1];
                 $fld = '$thissection["'.$rfld.'"]';
-            } else if (isset($thissection[$fldParts[0]])) {
+            } elseif (isset($thissection[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thissection["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'page') {
+            } elseif ($fldParts[0] == 'page') {
                 $rfld = $fldParts[1];
                 $fld = '$thispage["'.$rfld.'"]';
-            } else if (isset($thispage[$fldParts[0]])) {
+            } elseif (isset($thispage[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thispage["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'comment') {
+            } elseif ($fldParts[0] == 'comment') {
                 $rfld = $fldParts[1];
                 $fld = '$thiscomment["'.$rfld.'"]';
-            } else if (isset($thiscomment[$fldParts[0]])) {
+            } elseif (isset($thiscomment[$fldParts[0]])) {
                 $rfld = $fldParts[0];
                 $fld = '$thiscomment["'.$rfld.'"]';
-            } else if ($fldParts[0] == 'pretext') {
+            } elseif ($fldParts[0] == 'pretext') {
                 $rfld = $fldParts[1];
                 $fld = '$pretext["'.$rfld.'"]';
-            } else if (array_key_exists($fldParts[0], $allPtxt)) {
+            } elseif (array_key_exists($fldParts[0], $allPtxt)) {
                 $rfld = $fldParts[0];
                 $fld = $allPtxt[$rfld];
-            } else if ($fldParts[0] == 'pref') {
+            } elseif ($fldParts[0] == 'pref') {
                 $rfld = $fldParts[1];
                 $fld = '$prefs["'.$rfld.'"]';
-            } else if ($fldParts[0] == "parent") {
+            } elseif ($fldParts[0] == "parent") {
                 $treeField = 'name';
                 $level = '';
 
                 foreach ($fldParts as $part) {
                     if ($part == "parent") {
                         $theCat = ($thisfile) ? $thisfile['category'] : (($thislink) ? $thislink['category'] : (($thisimage) ? $thisimage['category'] : (($thiscategory['name']) ? $thiscategory['name'] : $pretext['c'])));
-                    } else if (strpos($part, "CAT") === 0) {
+                    } elseif (strpos($part, "CAT") === 0) {
                         $theCat = $thisarticle["category".substr($part, 3)];
-                    } else if (strpos($part, "LVL") === 0) {
+                    } elseif (strpos($part, "LVL") === 0) {
                         $level = substr($part, 3);
-                    } else if (strpos($part, "TTL") === 0) {
+                    } elseif (strpos($part, "TTL") === 0) {
                         $treeField = 'title';
-                    } else if (strpos($part, "KIDS") === 0) {
+                    } elseif (strpos($part, "KIDS") === 0) {
                         $treeField = 'children';
                     }
                 }
@@ -307,7 +307,7 @@ function smd_if($atts,$thing)
                 foreach ($tree as $leaf) {
                     if ($leaf['name'] == "root" || $leaf['name'] == $theCat) {
                         continue;
-                    } else if ($level == '' || $level == $leaf['level']) {
+                    } elseif ($level == '' || $level == $leaf['level']) {
                         $items[] = $leaf[$treeField];
                     }
                 }
@@ -321,38 +321,38 @@ function smd_if($atts,$thing)
                 }
 
                 $fld = '$parentCats';
-            } else if ($fldParts[0] == "txpvar") {
+            } elseif ($fldParts[0] == "txpvar") {
                 if (count($fldParts) > 1) {
                     $rfld = $fldParts[1];
                     $fld = '$variable["'.$rfld.'"]';
                 }
-            } else if ($fldParts[0] == "urlvar") {
+            } elseif ($fldParts[0] == "urlvar") {
                 if (count($fldParts) > 1) {
                     $rfld = $fldParts[1];
                     $fld = '$_GET["'.$rfld.'"]';
                 }
-            } else if ($fldParts[0] == "postvar") {
+            } elseif ($fldParts[0] == "postvar") {
                 if (count($fldParts) > 1) {
                     $rfld = $fldParts[1];
                     $fld = '$_POST["'.$rfld.'"]';
                 }
-            } else if ($fldParts[0] == "svrvar") {
+            } elseif ($fldParts[0] == "svrvar") {
                 if (count($fldParts) > 1) {
                     $rfld = $fldParts[1];
                     $fld = '$_SERVER["'.$rfld.'"]';
                 }
-            } else if ($fldParts[0] == "phpvar") {
+            } elseif ($fldParts[0] == "phpvar") {
                 if (count($fldParts) > 1) {
                     $rfld = $fldParts[1];
                     $fld = '$GLOBALS["'.$rfld.'"]';
                 }
-            } else if ($fldParts[0] == 'article') {
+            } elseif ($fldParts[0] == 'article') {
                 $rfld = strtolower($fldParts[1]);
                 $fld = '$thisarticle["'.$rfld.'"]';
-            } else if (isset($thisarticle[$fldParts[0]])) {
+            } elseif (isset($thisarticle[$fldParts[0]])) {
                 $rfld = strtolower($fldParts[0]);
                 $fld = '$thisarticle["'.$rfld.'"]';
-            } else if ($fldParts[0] == "NULL") {
+            } elseif ($fldParts[0] == "NULL") {
                 $smd_if_var = '';
                 $fld = '$smd_if_var';
                 $rfld = "NULL";
@@ -409,97 +409,97 @@ function smd_if($atts,$thing)
                         $vfld = $valParts[1];
                         $val = (isset($_GET[$vfld]) && $_GET[$vfld] != "") ? '$_GET["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "postvar") {
+                } elseif ($valParts[0] == "postvar") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($_POST[$vfld]) && $_POST[$vfld] != "") ? '$_POST["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "svrvar") {
+                } elseif ($valParts[0] == "svrvar") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($_SERVER[$vfld]) && $_SERVER[$vfld] != "") ? '$_SERVER["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "txpvar") {
+                } elseif ($valParts[0] == "txpvar") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($variable[$vfld]) && $variable[$vfld] != "") ? '$variable["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "phpvar") {
+                } elseif ($valParts[0] == "phpvar") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($GLOBALS[$vfld]) && $GLOBALS[$vfld] != "") ? '$GLOBALS["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "pref") {
+                } elseif ($valParts[0] == "pref") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($prefs[$vfld]) && $prefs[$vfld] != "") ? '$prefs["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "file") {
+                } elseif ($valParts[0] == "file") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thisfile[$vfld]) && $thisfile[$vfld] != "") ? '$thisfile["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "link") {
+                } elseif ($valParts[0] == "link") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thislink[$vfld]) && $thislink[$vfld] != "") ? '$thislink["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "image") {
+                } elseif ($valParts[0] == "image") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thisimage[$vfld]) && $thisimage[$vfld] != "") ? '$thisimage["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "category") {
+                } elseif ($valParts[0] == "category") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thiscategory[$vfld]) && $thiscategory[$vfld] != "") ? '$thiscategory["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "section") {
+                } elseif ($valParts[0] == "section") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thissection[$vfld]) && $thissection[$vfld] != "") ? '$thissection["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "page") {
+                } elseif ($valParts[0] == "page") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thispage[$vfld]) && $thispage[$vfld] != "") ? '$thispage["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "comment") {
+                } elseif ($valParts[0] == "comment") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thiscomment[$vfld]) && $thiscomment[$vfld] != "") ? '$thiscomment["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "pretext") {
+                } elseif ($valParts[0] == "pretext") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($pretext[$vfld]) && $pretext[$vfld] != "") ? '$pretext["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if ($valParts[0] == "article") {
+                } elseif ($valParts[0] == "article") {
                     if ($numValParts > 1) {
                         $vfld = $valParts[1];
                         $val = (isset($thisarticle[$vfld]) && $thisarticle[$vfld] != "") ? '$thisarticle["'.$vfld.'"]' : doQuote(str_replace('"', '\"', $vfld));
                     }
-                } else if (strpos($valParts[0], "?") === 0) {
+                } elseif (strpos($valParts[0], "?") === 0) {
                     $valParts[0] = substr(strtolower($valParts[0]), 1);
                     $vfld = $valParts[0];
 
                     if (isset($thisfile[$vfld]) && $thisfile[$vfld] != "") {
                         $val = '$thisfile["'.$vfld.'"]';
-                    } else if (isset($thislink[$vfld]) && $thislink[$vfld] != "") {
+                    } elseif (isset($thislink[$vfld]) && $thislink[$vfld] != "") {
                         $val = '$thislink["'.$vfld.'"]';
-                    } else if (isset($thisimage[$vfld]) && $thisimage[$vfld] != "") {
+                    } elseif (isset($thisimage[$vfld]) && $thisimage[$vfld] != "") {
                         $val = '$thisimage["'.$vfld.'"]';
-                    } else if (isset($thiscategory[$vfld]) && $thiscategory[$vfld] != "") {
+                    } elseif (isset($thiscategory[$vfld]) && $thiscategory[$vfld] != "") {
                         $val = '$thiscategory["'.$vfld.'"]';
-                    } else if (isset($thissection[$vfld]) && $thissection[$vfld] != "") {
+                    } elseif (isset($thissection[$vfld]) && $thissection[$vfld] != "") {
                         $val = '$thissection["'.$vfld.'"]';
-                    } else if (isset($thispage[$vfld]) && $thispage[$vfld] != "") {
+                    } elseif (isset($thispage[$vfld]) && $thispage[$vfld] != "") {
                         $val = '$thispage["'.$vfld.'"]';
-                    } else if (isset($thiscomment[$vfld]) && $thiscomment[$vfld] != "") {
+                    } elseif (isset($thiscomment[$vfld]) && $thiscomment[$vfld] != "") {
                         $val = '$thiscomment["'.$vfld.'"]';
-                    } else if (array_key_exists($vfld, $allPtxt) && $allPtxt[$vfld] != "") {
+                    } elseif (array_key_exists($vfld, $allPtxt) && $allPtxt[$vfld] != "") {
                         $val = $allPtxt[$vfld];
-                    } else if (isset($thisarticle[$vfld]) && $thisarticle[$vfld] != "") {
+                    } elseif (isset($thisarticle[$vfld]) && $thisarticle[$vfld] != "") {
                         $val = '$thisarticle["'.$vfld.'"]';
                     } else {
                         $val = doQuote(str_replace('"', '\"', $vfld));
