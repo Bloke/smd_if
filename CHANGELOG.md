@@ -2,8 +2,8 @@
 
 ## 1.0.0 - 2020-01-12
 
-* Registered plugin tag.
-* Fixed undefined index warning.
+* Register plugin tag.
+* Fix undefined index warning.
 
 ## 0.9.2 - 2016-04-20
 
