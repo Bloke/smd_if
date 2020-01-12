@@ -307,7 +307,7 @@ When you specify more than one filter, they ignore the @filter_type@ attribute b
 
 h2(#eg1). Example 1: standard comparison
 
-bc(block). <txp:smd_if field="section, id"
+bc(block). <txp:smd_if field="section:name, id"
      operator="begins, gt"
      value="lion, 12">
  <p>The lion sleeps tonight</p>
