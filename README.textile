@@ -235,7 +235,7 @@ Fortunately -- and unfortunately -- it's built around "regular expressions":http
 
 Let's dive in at the deep end and tell the plugin that, under no circumstances, must we allow any input that is non-numeric:
 
-bc(block). <txp:variable name="highest" value="100" />
+bc. <txp:variable name="highest" value="100" />
 <txp:smd_if field="urlvar:low" operator="ge, le"
      value="1, txpvar:highest" filter="/[^0-9]+/">
    <p>{smd_if_low} is valid and is between
@@ -274,7 +274,7 @@ h3(#fcaveat). Filtering caveat
 
 If you specify @filter_on="field, value"@ it is important to note that the _same filter_ will be applied to each corresponding field and value. If your filter is too strict there's a chance it may filter every character out of both @field@ and @value@, thus if your test was for equality the test would return 'true'. Here's an example:
 
-bc(block). <txp:smd_if field="urlvar:comp1" operator="eq"
+bc. <txp:smd_if field="urlvar:comp1" operator="eq"
      value="urlvar:comp2" filter="/[^a-zA-Z]+/"
      filter_on="field, value">
    // I'm NOT necessarily valid
@@ -290,7 +290,7 @@ You can see what's going to happen: the test result is going to be 'true' becaus
 
 For this reason, if you are filtering on both field and value, you should perform _additional_ tests to see if either field / value is set at all. This is better:
 
-bc(block). <txp:smd_if field="urlvar:comp1, urlvar:comp1, urlvar:comp2"
+bc. <txp:smd_if field="urlvar:comp1, urlvar:comp1, urlvar:comp2"
      operator="eq, isused, isused" value="urlvar:comp2"
      filter="/[^a-zA-Z]+/"
      filter_on="field, value">
@@ -307,7 +307,7 @@ When you specify more than one filter, they ignore the @filter_type@ attribute b
 
 h2(#eg1). Example 1: standard comparison
 
-bc(block). <txp:smd_if field="section:name, id"
+bc. <txp:smd_if field="section:name, id"
      operator="begins, gt"
      value="lion, 12">
  <p>The lion sleeps tonight</p>
@@ -319,7 +319,7 @@ Checks if the current section name begins with the word "lion" and the article I
 
 h2(#eg2). Example 2: other types of field
 
-bc(block). <txp:smd_if field="summary, category1, urlvar:pic"
+bc. <txp:smd_if field="summary, category1, urlvar:pic"
      operator="isused, eq, isnum"
      value=", animal ," >
   <p>All matched</p>
@@ -333,7 +333,7 @@ If all these conditions are met the "All matched" message is displayed, else the
 
 h2(#eg3). Example 3: using 'or' logic
 
-bc(block). <txp:smd_if field="article_image, svrvar:HTTP_USER_AGENT"
+bc. <txp:smd_if field="article_image, svrvar:HTTP_USER_AGENT"
      operator="eq, contains"
      value="urlvar:pic, Safari"
      logic="or">
@@ -346,7 +346,7 @@ Compares (for equality) the current article image id with the value of the url v
 
 h2(#eg4). Example 4: sub-category testing
 
-bc(block). <txp:smd_if field="parent:LVL2"
+bc. <txp:smd_if field="parent:LVL2"
      operator="eq"
      value="mammal">
  <txp:article />
@@ -360,7 +360,7 @@ Move the example into an article or article Form and change the field to @parent
 
 h2(#eg5). Example 5: defined/undefined/isused/isempty
 
-bc(block). <txp:smd_if field="urlvar:pic, urlvar:page"
+bc. <txp:smd_if field="urlvar:pic, urlvar:page"
      operator="gt:NUM, undefined"
      value="?article_image,">
  <p>Yes please</p>
@@ -379,7 +379,7 @@ h2(#eg6). Example 6: short circuiting the @field@
 
 Put this inside your @plainlinks@ form and execute a @<txp:linklist />@ from an article page/form:
 
-bc(block). <txp:smd_if field="id"
+bc. <txp:smd_if field="id"
      operator="ge:NUM, le:NUM"
      value="urlvar:min, urlvar:max">
   <txp:linkdesctitle /><br />
@@ -389,7 +389,7 @@ That will list only the links that have IDs between the @min@ and @max@ variable
 
 h2(#eg7). Example 7: alphanumeric testing
 
-bc(block). <txp:smd_if field="urlvar:product_code"
+bc. <txp:smd_if field="urlvar:product_code"
      operator="isalnum">
   <txp:output_form form="show_product" />
 <txp:else />
@@ -400,7 +400,7 @@ Tests to see if the product_code URL variable is alphanumeric and displays a for
 
 h2(#eg8). Example 8: displaying used values
 
-bc(block). <txp:smd_if field="urlvar:sort_order"
+bc. <txp:smd_if field="urlvar:sort_order"
      operator="in"
      value="id/price/size/colour">
   <p>Sorting values by {smd_if_sort_order}</p>
@@ -413,7 +413,7 @@ By using the replacement tag {smd_if_sort_order} you have plucked the value from
 
 h2(#eg9). Example 9: using phpvar
 
-bc(block). <txp:php>
+bc. <txp:php>
 global $bodyex;
 $bodyex = excerpt(array()).body(array());
 </txp:php>
@@ -430,21 +430,21 @@ h2(#eg10). Example 10: @between@ and @range@
 
 Check that the given URL params @day@ and @month@ are within reasonable tolerance. Note that it's still possible to specify the 31st February so you may require extra checks in the container.
 
-bc(block). <txp:smd_if field="urlvar:day, urlvar:month"
+bc. <txp:smd_if field="urlvar:day, urlvar:month"
      operator="between, between" value="0/32, 0/13">
    // Likely a valid date supplied
 </txp:smd_if>
 
 This is functionally equivalent, and probably more obvious to anyone else reading the code:
 
-bc(block). <txp:smd_if field="urlvar:day, urlvar:month"
+bc. <txp:smd_if field="urlvar:day, urlvar:month"
      operator="range, range" value="1/31, 1/12">
    // Likely a valid date supplied
 </txp:smd_if>
 
 If you wanted to factor the year in and make sure that nobody used a year less than 1900 or greater than the current year, try this:
 
-bc(block). <txp:php>
+bc. <txp:php>
 global $thisyear;
 $thisyear = date("Y");
 </txp:php>
@@ -456,7 +456,7 @@ $thisyear = date("Y");
 
 h2(#eg11). Example 11: reading multiple values from different places
 
-bc(block). <txp:variable name="ltuae">42</txp:variable>
+bc. <txp:variable name="ltuae">42</txp:variable>
 <txp:smd_if field="urlvar:trigger"
      operator="in" value="3/15/36/txpvar:ltuae/180/?secret">
    <p>You found one of the magic numbers</p>
