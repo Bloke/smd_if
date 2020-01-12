@@ -83,6 +83,11 @@ if (!defined('txpinterface'))
  * @link   https://stefdawson.com/
  */
 
+if (class_exists('\Textpattern\Tag\Registry')) {
+    Txp::get('\Textpattern\Tag\Registry')
+        ->register('smd_if');
+}
+
 function smd_if($atts, $thing)
 {
     global $thisarticle, $pretext, $thisfile, $thislink, $thisimage, $thissection, $thiscategory, $thispage, $thiscomment, $variable, $prefs;
