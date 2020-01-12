@@ -83,7 +83,7 @@ if (!defined('txpinterface'))
  * @link   https://stefdawson.com/
  */
 
-function smd_if($atts,$thing)
+function smd_if($atts, $thing)
 {
     global $thisarticle, $pretext, $thisfile, $thislink, $thisimage, $thissection, $thiscategory, $thispage, $thiscomment, $variable, $prefs;
 
@@ -104,8 +104,8 @@ function smd_if($atts,$thing)
         'debug'          => '0',
     ), $atts));
 
-    // Special field names that refer to $pretext or elsewhere - everything else is assumed to
-    // exist in $thisarticle so custom fields can be used
+    // Special field names that refer to $pretext or elsewhere - everything else is
+    // assumed to exist in $thisarticle so custom fields can be used.
     $allPtxt = array(
         "id"            => '$pretext["id"]',
         "s"             => '$pretext["s"]',
@@ -125,7 +125,7 @@ function smd_if($atts,$thing)
         "permlink_mode" => '$pretext["permlink_mode"]',
     );
 
-    // Each entry has the operation to be eval()d later and a list of disallowed fields
+    // Each entry has the operation to be eval()d later and a list of disallowed fields.
     $allOps = array(
         'eq'        => array('isset(VARNAME) && CAST FIELD === CAST VALUE', ''),
         'not'       => array('isset(VARNAME) && CAST FIELD !== CAST VALUE', ''),
@@ -165,7 +165,7 @@ function smd_if($atts,$thing)
 
     $vals = do_list($value, $param_delim);
     $numVals = count($vals);
-    $parentCats = ''; // Placeholder for the concatenated list of category leaf nodes
+    $parentCats = ''; // Placeholder for the concatenated list of category leaf nodes.
 
     $replacements = array();
     $type = ($thisfile) ? "file" : (($thislink) ? "link" : (($thisimage) ? "image" : "article"));
@@ -185,7 +185,7 @@ function smd_if($atts,$thing)
     }
 
     for ($idx = 0; $idx < $iterations; $idx++) {
-        $fld = ($idx < $numFlds) ? $fields[$idx] : $fields[0]; // Allow short-circuit
+        $fld = ($idx < $numFlds) ? $fields[$idx] : $fields[0]; // Allow short-circuit.
         $fldParts = explode($mod_delim, $fld);
         $val = ($idx < $numVals) ? $vals[$idx] : '';
         $valList = explode($list_delim, $val);
@@ -219,13 +219,13 @@ function smd_if($atts,$thing)
             dmp($fldParts, $opParts, $valRep);
         }
 
-        // Get the operator replacement code
+        // Get the operator replacement code.
         $exclude = do_list($allOps[$op][1]);
         $op = $allOps[$op][0];
 
         // As long as the current operator allows this field...
         if (!in_array($fldParts[0], $exclude)) {
-            // Make up the test field variable
+            // Make up the test field variable.
             if ($fldParts[0] == 'file') {
                 $rfld = $fldParts[1];
                 $fld = '$thisfile["'.$rfld.'"]';
@@ -366,10 +366,10 @@ function smd_if($atts,$thing)
             $rcfld = $var_prefix."count_".$rfld;
             $rfld = $var_prefix.$rfld;
 
-            // Take a copy of $fld to use in any isset() requests
+            // Take a copy of $fld to use in any isset() requests.
             $fldClean = $fld;
 
-            // Apply user-defined field filters
+            // Apply user-defined field filters.
             if ($killSpaces) {
                 $fld = 'preg_replace("/\s+/","",'.$fld.')';
             }
@@ -392,7 +392,7 @@ function smd_if($atts,$thing)
 
             $do_ffilt = ($pat && in_array('field', $filter_on) && (in_array($fldParts[0], $filter_type) || in_array('all', $filter_type)) ) ? true : false;
 
-            // Find the real value to compare against (may be another field)
+            // Find the real value to compare against (may be another field).
             $valcnt = 1;
             $vflds = array();
             $core_vfld = "val".(($idx*1)+1);
@@ -509,7 +509,7 @@ function smd_if($atts,$thing)
                     $val = doQuote(str_replace('"', '\"', $valParts[0]));
                 }
 
-                // Apply user-defined value filters
+                // Apply user-defined value filters.
                 if ($stripVal) {
                     $val = 'trim(strip_tags('.$val.'))';
                 }
@@ -528,12 +528,12 @@ function smd_if($atts,$thing)
 
                 $do_vfilt = ($pat && in_array('value', $filter_on) && (in_array($valParts[0], $filter_type) || in_array('all', $filter_type)) ) ? true : false;
 
-                // Replace the string parts by evaluating any variables...
+                // Replace the string parts by evaluating any variables.
                 $filt_fld = ($do_ffilt) ? "preg_replace('$pat', '$rep', $fld)" : $fld;
                 $filt_val = ($do_vfilt) ? "preg_replace('$pat', '$rep', $val)" : $val;
                 eval("\$valRep[$jdx] = ".$filt_val.";");
 
-                // Only add sub-values to the replacements array if there's more than one sub-value
+                // Only add sub-values to the replacements array if there's more than one sub-value.
                 if (count($valRep) > 1) {
                     $vflds[$var_prefix.$vfld] = $valRep[$jdx];
                     $vflds[$var_prefix."len_".$vfld] = strlen($valRep[$jdx]);
@@ -545,7 +545,7 @@ function smd_if($atts,$thing)
             $joinedVals = join($list_delim, $valRep);
             $smd_prefilter = doQuote($joinedVals);
 
-            // Add the combined operator for backwards compatibility with plugin v0.8x
+            // Add the combined operator for backwards compatibility with plugin v0.8.x.
             $vflds[$var_prefix.$core_vfld] = $joinedVals;
             $vflds[$var_prefix."len_".$core_vfld] = strlen($joinedVals);
 
@@ -556,7 +556,8 @@ function smd_if($atts,$thing)
             $cmd = str_replace("VARNAME", $fldClean, $cmd);
             $cmd = str_replace("VALUE", (($case_sensitive) ? 'VALUE' : 'strtolower(VALUE)'), $cmd);
 
-            // Value replacements have already been run through evil() so they can be assigned directly
+            // Value replacements have already been run through evil() so
+            // they can be assigned directly.
             foreach ($vflds as $valit => $valval) {
                 $replacements['{'.$valit.'}'] = $valval;
             }
@@ -585,38 +586,47 @@ function smd_if($atts,$thing)
             echo "PRETEXT:";
             dmp($pretext);
         }
+
         if ($thisarticle) {
             echo "THIS ARTICLE:";
             dmp($thisarticle);
         }
+
         if ($thisfile) {
             echo "THIS FILE:";
             dmp($thisfile);
         }
+
         if ($thislink) {
             echo "THIS LINK:";
             dmp($thislink);
         }
+
         if ($thisimage) {
             echo "THIS IMAGE:";
             dmp($thisimage);
         }
+
         if ($thiscategory) {
             echo "THIS CATEGORY:";
             dmp($thiscategory);
         }
+
         if ($thissection) {
             echo "THIS SECTION:";
             dmp($thissection);
         }
+
         if ($thispage) {
             echo "THIS PAGE:";
             dmp($thispage);
         }
+
         if ($thiscomment) {
             echo "THIS COMMENT:";
             dmp($thiscomment);
         }
+
         if ($prefs) {
             echo "PREFS:";
             dmp($prefs);
@@ -1123,32 +1133,6 @@ h2. Author
 
 "Stef Dawson":https://stefdawson.com/contact. Based on an idea brewing in the back of my mind while hacking chs_if_urlvar.
 
-h2(changelog). Changelog
-
-* 30 Dec 2007 | 0.10 | Initial release
-* 30 Dec 2007 | 0.20 | Added parent category checking (thanks the_ghost)
-* 02 Jan 2008 | 0.30 | Added defined/undefined and strict numeric comparisons
-* 06 Jan 2008 | 0.40 | Added @?@ notation to allow the value to read Txp fields; better quote support (both thanks NeilA)
-* 06 Jan 2008 | 0.41 | Fixed lower case field names and undefined index error (thanks peterj)
-* 14 Jan 2008 | 0.50 | Added case_sensitive option; made 'contains' the default for 'parent' tests; improved help (all thanks the_ghost); added delim options
-* 15 Jan 2008 | 0.51 | Fixed defined/undefined syntax error; tightened isused/isempty to distinguish them from defined/undefined
-* 25 May 2008 | 0.60 | Fixed 'undefined index' errors (thanks redbot and the_ghost) ; added more pretext variables ; added more @is@ checks (and the NOSPACE modifier) ; allowed file and link tests (including parent categories)
-* 26 May 2008 | 0.61 | Fixed stupid oversight in field name generation to allow arbitrary names instead of forcing $thisarticle (thanks to Joana Carvalho for leading me to this)
-* 11 Jun 2008 | 0.62 | Fixed incorrect result if eval() is empty ; added NULL field object
-* 10 Sep 2008 | 0.70 | Fixed warning if empty custom field in value (thanks visualpeople) ; added txpvar support (thanks the_ghost) ; added thisimage support (for the future) ; added operators @in@, @notin@ and the @list_delim@ attribute; enabled replacement tags for matched variables
-* 01 Oct 2008 | 0.71 | Fixed the fix for empty custom fields implemented in 0.7 (thanks mapu/visualpeople)
-* 01 Oct 2008 | 0.72 | Added @:NOTAGS@ (thanks mapu)
-* 13 Oct 2008 | 0.73 | Added @:NOSPACE@ to @begins@, @ends@ and @contains@ (thanks mapu), added phpvar support, @:LEN@ modifier and length replacement tags (all thanks the_ghost)
-* 13 Oct 2008 | 0.74 | Bug fix the smd_if_ names of vals and fields to avoid clashes. Now numerically indexed
-* 02 Dec 2008 | 0.75 | Added @divisible@ operator (thanks gomedia) ; allow short-circuit of fields (thanks redbot)
-* 20 Mar 2009 | 0.76 | Added @postvar@ field type (thanks kostas45)
-* 22 Mar 2009 | 0.77 | Added @:TRIM@ modifier (thanks gomedia)
-* 05 Apr 2009 | 0.80 | Added filtering capability
-* 26 Sep 2009 | 0.81 | Added parent @TTL@ and @KIDS@ modifiers (thanks photonomad) ; improved parent debug output
-* 02 Mar 2010 | 0.82 | Added @between@ and @range@ (thanks speeke)
-* 02 Mar 2010 | 0.90 | Internal code refactorisation ; allowed multiple values to be read from multiple sources (thanks speeke) ; enhanced replacement tags
-* 22 Feb 2012 | 0.91 | Fixed pretext checks for section/category (thanks saccade) ; enabled explicit checks for pretext, file, link, image, article, category, section, page and comment ; added @var_prefix@ to allow nesting of smd_if tags; added @:COUNT@ modifier (thanks the_ghost) ; added @:ESC@ and @:ESCALL@ modifiers ; fixed checks for defined / undefined
-* XX YYY ZZZZ | 0.92 | Added support for @thiscategory@, @thissection@, @thispage@ and @thiscomment@
 # --- END PLUGIN HELP ---
 -->
 <?php
