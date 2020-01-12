@@ -192,6 +192,11 @@ function smd_if($atts, $thing)
     for ($idx = 0; $idx < $iterations; $idx++) {
         $fld = ($idx < $numFlds) ? $fields[$idx] : $fields[0]; // Allow short-circuit.
         $fldParts = explode($mod_delim, $fld);
+
+        if (!isset($fldParts[1])) {
+            $fldParts[1] = null;
+        }
+
         $val = ($idx < $numVals) ? $vals[$idx] : '';
         $valList = explode($list_delim, $val);
         $valRep = array();
@@ -649,7 +654,7 @@ function smd_if($atts, $thing)
         $result = false;
     }
 
-    return parse(EvalElse(strtr($thing, $replacements), $result));
+    return parse(strtr($thing, $replacements), $result);
 }
 # --- END PLUGIN CODE ---
 if (0) {
@@ -965,7 +970,7 @@ When you specify more than one filter, they ignore the @filter_type@ attribute b
 
 h2(#eg1). Example 1: standard comparison
 
-bc(block). <txp:smd_if field="section, id"
+bc(block). <txp:smd_if field="section:name, id"
      operator="begins, gt"
      value="lion, 12">
  <p>The lion sleeps tonight</p>
